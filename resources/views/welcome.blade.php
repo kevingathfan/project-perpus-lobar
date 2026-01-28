@@ -35,8 +35,7 @@
             <div class="col-md-10">
                 <div class="list-group">
                     @foreach($libraries as $lib)
-                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <div>
+                    <a href="{{ route('lapor.form', $lib->id) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">                        <div>
                             <h5 class="mb-1">{{ $lib->nama_perpustakaan }}</h5>
                             <small class="text-muted">{{ $lib->jenis_instansi }} - {{ $lib->alamat }}</small>
                         </div>

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Library; // Panggil model Sekolah
+use App\Models\Library;
 
 class PublicController extends Controller
 {
-    // 1. Tampilkan Halaman Depan
     public function index(Request $request)
     {
-        // Jika ada pencarian, cari datanya. Jika tidak, kosongkan.
         $keyword = $request->query('cari');
-
+        
         $libraries = [];
+        
         if ($keyword) {
-            $libraries = Library::where('nama_perpustakaan', 'LIKE', "%{$keyword}%")
-                        ->orWhere('jenis_instansi', 'LIKE', "%{$keyword}%")
+            // PERUBAHAN DI SINI:
+            // Gunakan 'ilike' (khusus Postgres) agar tidak case-sensitive
+            $libraries = Library::where('nama_perpustakaan', 'ilike', "%{$keyword}%")
+                        ->orWhere('jenis_instansi', 'ilike', "%{$keyword}%")
                         ->get();
         }
 
@@ -24,5 +25,16 @@ class PublicController extends Controller
             'libraries' => $libraries,
             'keyword' => $keyword
         ]);
+    
     }
+    public function showForm($id)
+    {
+        // 1. Cari sekolah berdasarkan ID
+        $library = Library::findOrFail($id);
+
+        // 2. Tampilkan halaman formulir sambil membawa data sekolah
+        return view('form-lapor', ['library' => $library]);
+    }
+}
+Langkah 3: Hubungkan T
 }
