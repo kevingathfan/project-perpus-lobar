@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicController;
 
-Route::get('/', function () {
-    return 'Sistem Informasi Perpustakaan Lombok Barat';
-});
-
+// Halaman Depan & Pencarian
+Route::get('/', [PublicController::class, 'index'])->name('home');
